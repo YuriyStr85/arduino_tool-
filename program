@@ -231,7 +231,6 @@ class Combut(Button):
 strlf = open('uprvl.txt','r')
 strl = strlf.read().split(',')
 
-#configure(borderwidth = 0, bg = 'white') 
 binput = Combut('Enter',enter,fup1)
 bpravo = Combut(strl[3],pravo,fup2)
 blevo = Combut(strl[0],levo,fup2) #u\2190
@@ -245,36 +244,12 @@ bread = Combut('COM\nread',usb_read,fup4)
 bhor = Combut('Hor\nmove',hor_x,fup4)
 bver = Combut('Ver\nmove',ver_y,fup4)
 bhlp = Combut('Arduino\n sketch\n help',ard_help,fup5)
-#bhlp.cb.configure(font = ('arial',8))
 bhlp.cb.pack(fill = X)
-#bdisconn.cb.configure(font = ('arial',9))
-#bread.cb.configure(bg = 'grey', font = ('arial',10))
 combtn_lst = [bpravo.cb,blevo.cb,bverh.cb,bvniz.cb,bstop.cb]
 for i in combtn_lst:
 	i.configure(bg = 'red', font = ('arial',12))
     
 def najatie(event):
-   '''   if event.char == '1': 
-     b.cifra()
-   elif event.char == '2': 
-     c.cifra()
-   elif event.char == '3': 
-     d.cifra()
-   elif event.char == '4': 
-     f.cifra()
-   elif event.char == '5': 
-     g.cifra()
-   elif event.char == '6': 
-     h.cifra()
-   elif event.char == '7': 
-     k.cifra()
-   elif event.char == '8': 
-     p.cifra()
-   elif event.char == '9': 
-     q.cifra()
-   elif event.char == '0': 
-     a.cifra()
-   '''
    if event.keycode == 39: 
      pravo()
    elif event.keycode == 37: 
@@ -285,29 +260,7 @@ def najatie(event):
      vniz()
    elif event.keycode == 13: 
      usb_input()
-   '''  
-   elif event.keycode == 32: 
-     stop()
-   elif event.char == 'c': 
-     connect()
-   
-   elif event.char == 'f': 
-     entry_clr()'''
 
-'''def Ein(event):
-	root.unbind('<KeyPress-w>')
-	root.unbind('<KeyPress-a>')
-	root.unbind('<KeyPress-d>')
-	root.unbind('<KeyPress-s>')
-	root.unbind('<Return>')
-	printt('focused')
-def Eout(event):
-	root.bind('<KeyPress-w>',najatie)
-	root.bind('<KeyPress-a>',najatie)
-	root.bind('<KeyPress-d>',najatie)
-	root.bind('<KeyPress-s>',najatie)
-	root.bind('<Return>',najatie)
-	printt('Out of focusing')'''
 
 root.bind('<KeyPress-1>',najatie)
 root.bind('<KeyPress-2>',najatie)
@@ -324,12 +277,7 @@ root.bind('<KeyPress-Left>',najatie)
 root.bind('<KeyPress-Up>',najatie)
 root.bind('<KeyPress-Down>',najatie)
 root.bind('<Return>',najatie)
-'''root.bind('<KeyPress-s>',najatie)
-root.bind('<KeyPress-f>',najatie)
-y.bind('<FocusIn>',Ein)
-y.bind('<FocusOut>',Eout)
 
-root.bind('<Enter>',usb_input)'''
 
 
 binput.cb.pack(side = RIGHT)
