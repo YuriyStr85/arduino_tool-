@@ -228,8 +228,11 @@ class Combut(Button):
     def __init__(self,txt,com,frame):
         self.cb = Button(frame,text = txt, command = com, font = ('arial',12), height = 3, width = 6, bd = 3, fg = 'black', bg = 'white')
 
-strlf = open('uprvl.txt','r')
-strl = strlf.read().split(',')
+#strlf = open('uprvl.txt','r')
+#strl = strlf.read().split(',')
+# строка выше - вариант для назначение на кнопки юникодовских или других стрелок. вариант файлом из-за конфликта кодировок в программе
+
+strl = ['left','up','down','right']
 
 binput = Combut('Enter',enter,fup1)
 bpravo = Combut(strl[3],pravo,fup2)
