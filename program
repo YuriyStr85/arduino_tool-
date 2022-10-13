@@ -265,22 +265,11 @@ def najatie(event):
      usb_input()
 
 
-root.bind('<KeyPress-1>',najatie)
-root.bind('<KeyPress-2>',najatie)
-root.bind('<KeyPress-3>',najatie)
-root.bind('<KeyPress-4>',najatie)
-root.bind('<KeyPress-5>',najatie)
-root.bind('<KeyPress-6>',najatie)
-root.bind('<KeyPress-7>',najatie)
-root.bind('<KeyPress-8>',najatie)
-root.bind('<KeyPress-9>',najatie)
-root.bind('<KeyPress-0>',najatie)
 root.bind('<KeyPress-Right>',najatie)
 root.bind('<KeyPress-Left>',najatie)
 root.bind('<KeyPress-Up>',najatie)
 root.bind('<KeyPress-Down>',najatie)
 root.bind('<Return>',najatie)
-
 
 
 binput.cb.pack(side = RIGHT)
