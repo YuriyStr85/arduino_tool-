@@ -20,10 +20,9 @@ The 'STOP' button sends 'b' symbol (break) in the serial COM port by clicking on
 '''
 
 import serial,threading,time
-import sys
 from Tkinter import *
 
-#sys.setdefaultencoding('utf-8')
+
 
 s = 0
 
