@@ -279,8 +279,6 @@ bclr.cb.pack(side = RIGHT)
 bvniz.cb.pack(side = RIGHT)
 bdisconn.cb.pack(side = RIGHT)
 bread.cb.pack(side = LEFT)
-bhor.cb.pack(side = LEFT)
-bver.cb.pack(side = LEFT)
 bhlp.cb.pack(side = LEFT)
 
 root.mainloop()
