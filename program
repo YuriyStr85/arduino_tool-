@@ -172,14 +172,14 @@ def stop():
     printt('desactivated')
 def enter():
 	usb_input(y.get())
-def hor_x():
+def hor_x():        # There is no button prepared for this function
 	try:
 		dx=y.get()
 	except:
 		printt('Incorrect value')
 	usb_input(''.join(['x',str(dx)]))
 	printt(''.join(['horizontal motion : ',str(dx)]))
-def ver_y():
+def ver_y():        # There is no button prepared for this function
 	pass
 
 def ard_help():
