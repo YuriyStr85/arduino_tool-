@@ -8,6 +8,7 @@ If You do not have 'COM' ports on your device, install virtual 'COM' port before
 The 'COM Connect' button provides connection to the virtual COM6 port.Connection baud rate by default: 9600. Reading parameters: timeout 2sec., size 32 bytes.
 Connect it properly or change the port number. To change the port number - set tne number in the Text-entry-line and push the button 'COM Connect'.\n
 The 'ENTER' button sends string of symbols from Text-entry-line in the serial COM port by clicking on it\n
+The 'COM read' button activates reading mode for getting information from your device. Click this button once again to switch off the reading mode.\n
 
 Direction buttons (works also by clicking on arrow keys on your keyboard): 
 *right direction- sends 'r' symbol from Text-entry-line in the serial COM port\n
