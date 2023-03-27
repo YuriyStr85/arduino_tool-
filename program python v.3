@@ -1,0 +1,285 @@
+# -*- coding: utf-8 -*-
+'''
+* Arduino tools *
+
+If You do not have 'COM' ports on your device, install virtual 'COM' port before using this program.
+
+The 'COM Connect' button provides connection to the virtual COM6 port.Connection baud rate by default: 9600. Reading parameters: timeout 2sec., size 32 bytes.
+Connect it properly or change the port number. To change the port number - set tne number in the Text-entry-line and push the button 'COM Connect'.\n
+The 'ENTER' button sends string of symbols from Text-entry-line in the serial COM port by clicking on it\n
+The 'COM read' button activates reading mode for getting information from your device. Click this button once again to switch off the reading mode.\n
+
+
+Direction buttons (works also by clicking on arrow keys on your keyboard): 
+*right direction- sends 'r' symbol from Text-entry-line in the serial COM port\n
+*left direction- sends 'l' symbol from Text-entry-line in the serial COM port\n
+*up direction- sends 'u' symbol from Text-entry-line in the serial COM port\n
+*down direction- sends 'd' symbol from Text-entry-line in the serial COM port\n
+	
+The 'STOP' button sends 'b' symbol (break) in the serial COM port by clicking on it\n	
+
+'''
+
+import serial,threading,time
+from tkinter import *
+
+
+
+s = 0
+
+
+
+root = Tk()
+root.resizable(False, False)
+
+
+		
+f0 = Frame(root,bg = 'black', padx = 5, pady = 5)
+f0.pack(side = TOP, fill = X)
+f1 = Frame(root)          
+f1.pack(side = LEFT, fill = Y)     
+f2 = Frame(root)          
+f2.pack(side = LEFT, fill = Y)
+f3 = Frame(root)
+f3.pack(side = LEFT, fill = Y)
+f4 = Frame(root)
+f4.pack(side = LEFT, fill = Y)
+fup1=Frame(f4)
+fup1.pack(side = TOP,fill = X)
+fup2=Frame(f4)
+fup2.pack(side = TOP)
+fup3=Frame(f4)
+fup3.pack(side = TOP,fill = X)
+fup4=Frame(f4)
+fup4.pack(side = TOP,fill = X)
+fup5=Frame(f4)
+fup5.pack(side = TOP,fill = X)
+
+
+fr_list = [f1,f2,f3,f4,fup1,fup2,fup3,fup4]
+for i in fr_list:
+	i.configure(borderwidth = 0, bg = 'white')
+
+x = Label(f0, text = '', font = ('Arial',14), bg = 'black' , fg = 'green')
+x.pack(side = TOP,fill=X)
+
+
+y = Entry(f0,font = ('arial',10), bg = 'black' , fg = 'green')
+y.pack(side = TOP, fill=X)
+
+def entry_clr():
+	y.delete(0,END)
+	
+	
+class Char_button():
+    def __init__(self,char,knside):
+        self.char = char
+        self.kn = Button(knside,text = char, command = self.cifra, height = 3,width = 6, font = 'arial,24', bd = 3)
+    def cifra(self):
+        y.insert(len(y.get()),self.char)
+		    
+
+
+
+def printt(xxx):
+	x.config(text = str(xxx))
+
+	
+def connect():
+	global usb
+	try:		
+		if type(int(y.get())) == int:
+			print(''.join(['Connecting ','COM',y.get()]))
+			usb=serial.Serial(''.join(['com',str(y.get())]),timeout=2)
+		else:
+			print('Connecting COM6')
+			usb=serial.Serial('com6',timeout=2)
+		printt('Connected')
+	except:
+		printt('Not connected...')
+
+def disconn():
+	global usb
+	try:
+		usb.close()
+		if usb.is_open == False:
+			printt('Disconnected')
+	except:
+		printt('Disconnecting error...')
+
+
+def usb_input(inp):	
+	try: 
+		#if y.get()!='' :
+		#	usb.write(y.get())
+		#	y.delete(0,END)
+		#	return
+		usb.write(inp)
+	except:
+		printt('Error...')
+
+		
+
+
+def read_port(): #for internal use in usb_read-function
+	global r     #,usb
+	printt('Activating reading mode.')
+	time.sleep(1)
+	while r==1: #readable condition
+		try:
+			if usb.is_open == True:
+				try:
+					print(usb.read(size = 32))
+
+				except:
+					printt('Reading error')
+					r=r*(-1)
+			else:
+				printt('COM port is closed.')
+				time.sleep(2)
+				r=r*(-1)
+		except:
+			printt('Impossible to activate reading mode.')
+			r=r*(-1)
+
+r=-1
+			
+def usb_read():
+	global usb,r
+	r=r*(-1)
+	if r==1:
+		#bread.cb.configure(bg = 'white', font = ('arial',8), text = 'stop\nreading')
+		rd=threading.Thread(target=read_port)
+		rd.start()
+		
+	elif r==-1:
+		#bread.cb.configure(bg = 'grey', font = ('arial',10), text = 'USB\nread')		
+		printt('Reading mode is Off')
+		
+def pravo():
+	usb_input('r')
+	printt('right motion')
+def levo():
+    usb_input('l')
+    printt('left motion')
+def verh():
+    usb_input('u')
+    printt('up motion')
+def vniz():
+    usb_input('d')
+    printt('down motion')
+def stop():
+    usb_input('b')
+    printt('desactivated')
+def enter():
+	usb_input(y.get())
+def hor_x():
+	try:
+		dx=y.get()
+	except:
+		printt('Incorrect value')
+	usb_input(''.join(['x',str(dx)]))
+	printt(''.join(['horizontal motion : ',str(dx)]))
+def ver_y():
+	pass
+
+def ard_help():
+	import __main__
+	#from Tkconstants import END
+	#h_txt = ''.join(hl) 
+	fr = Tk()
+	t = Text(fr,bg='white',fg='black',font=('arial',10),wrap=WORD, height = 400)
+	t.pack(fill=BOTH, side=LEFT, expand=True)
+	#t.insert(1.0,h_txt)
+	#vbar = Scrollbar(fr)
+	#vbar.pack(side=RIGHT, fill=Y)
+	#fr.kw.update({'yscrollcommand': vbar.set})
+	#vbar['command'] = fr.yview
+	t.insert(1.0,__main__.__doc__)
+	t.mainloop()
+
+
+root.title('Arduino TOOLs')
+
+
+
+b = Char_button('1',f1)
+b.kn.pack(side = TOP)
+c = Char_button('2',f2)
+c.kn.pack(side = TOP)
+d = Char_button('3',f3)
+d.kn.pack(side = TOP)
+f = Char_button('4',f1)
+f.kn.pack(side = TOP)
+g = Char_button('5',f2)
+g.kn.pack(side = TOP)
+h = Char_button('6',f3)
+h.kn.pack(side = TOP)
+j = Char_button('7',f1)
+j.kn.pack(side = TOP)
+k = Char_button('8',f2)
+k.kn.pack(side = TOP)
+p = Char_button('9',f3)
+p.kn.pack(side = TOP)
+a = Char_button('0',f2)
+a.kn.pack(side = TOP)
+
+class Combut(Button):
+    def __init__(self,txt,com,frame):
+        self.cb = Button(frame,text = txt, command = com, font = ('arial',12), height = 3, width = 6, bd = 3, fg = 'black', bg = 'white')
+
+#strlf = open('uprvl.txt','r')
+#strl = strlf.read().split(',')
+# строка выше - вариант для назначение на кнопки юникодовских или других стрелок. вариант файлом из-за конфликта кодировок в программе
+
+strl = ['left','up','down','right']
+
+binput = Combut('Enter',enter,fup1)
+bpravo = Combut(strl[3],pravo,fup2)
+blevo = Combut(strl[0],levo,fup2) #u\2190
+bverh = Combut(strl[1],verh,fup1) #u\2191
+bconnect = Combut('COM\nconnect',connect,fup1)
+bdisconn = Combut('COM\ndisconn',disconn,fup3)
+bvniz = Combut(strl[2],vniz,fup3)#u\2193
+bstop = Combut('stop',stop,fup2)
+bclr = Combut('Clr',entry_clr,fup3)
+bread = Combut('COM\nread',usb_read,fup4)
+bhlp = Combut('Arduino\n sketch\n help',ard_help,fup5)
+bhlp.cb.pack(fill = X)
+combtn_lst = [bpravo.cb,blevo.cb,bverh.cb,bvniz.cb,bstop.cb]
+for i in combtn_lst:
+	i.configure(bg = 'red', font = ('arial',12))
+    
+def najatie(event):
+   if event.keycode == 39: 
+     pravo()
+   elif event.keycode == 37: 
+     levo()    
+   elif event.keycode == 38: 
+     verh()
+   elif event.keycode == 40: 
+     vniz()
+   elif event.keycode == 13: 
+     usb_input()
+
+
+root.bind('<KeyPress-Right>',najatie)
+root.bind('<KeyPress-Left>',najatie)
+root.bind('<KeyPress-Up>',najatie)
+root.bind('<KeyPress-Down>',najatie)
+root.bind('<Return>',najatie)
+
+
+binput.cb.pack(side = RIGHT)
+bpravo.cb.pack(side = RIGHT)
+bstop.cb.pack(side = RIGHT)
+blevo.cb.pack(side = RIGHT)
+bverh.cb.pack(side = RIGHT)
+bconnect.cb.pack(side = RIGHT)
+bclr.cb.pack(side = RIGHT) 
+bvniz.cb.pack(side = RIGHT)
+bdisconn.cb.pack(side = RIGHT)
+bread.cb.pack(side = LEFT)
+bhlp.cb.pack(side = LEFT)
+
+root.mainloop()
